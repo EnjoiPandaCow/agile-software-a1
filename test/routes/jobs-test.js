@@ -165,7 +165,20 @@ describe('Jobs', function () {
                 });
         });
     });
-    
+    describe('PUT /jobs/:id', function () {
+        it('should return a confirmation message and an updated datastore', function (done) {
+            var update = {"title": "New Test Title 3.0"};
+            chai.request(server)
+                .put('/jobs/59f1e69dd0ae514f10a24a82')
+                .send(update)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.have.property('message').equal('Job Updated');
+                    done();
+                });
+        });
+    });
 });
+
 
 

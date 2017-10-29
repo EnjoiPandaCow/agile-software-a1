@@ -178,6 +178,16 @@ describe('Jobs', function () {
                 });
         });
     });
+    describe('DELETE /jobs/:id', function() {
+        it('should delete a job with a certain id', function (done) {
+            chai.request(server)
+                .delete('/jobs/59f1e69dd0ae514f10a24a82')
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    done();
+                });
+        });
+    })
 });
 
 

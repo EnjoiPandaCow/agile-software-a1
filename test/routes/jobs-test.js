@@ -189,6 +189,17 @@ describe('Jobs', function () {
         });
     })
 });
-
+describe('POST /jobs/search', function() {
+    it('should return a title that contains all or part of value', function (done) {
+        var search = {"key":"title", "value":"Couch"};
+        chai.request(server)
+            .post('/jobs/search')
+            .send(search)
+            .end(function (err, res) {
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+});
 
 

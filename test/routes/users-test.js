@@ -71,13 +71,25 @@ describe('Users', function () {
         });
     });
     describe('GET /users', function () {
-        it('should return all the jobs in the array', function (done) {
+        it('should return all the users in the array', function (done) {
             chai.request(server)
                 .get('/users')
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.a('array');
                     expect(res.body.length).to.equal(2);
+                    done();
+                });
+        });
+    });
+    describe('GET /users/:id', function () {
+        it('should return a single user with certain id', function (done) {
+            chai.request(server)
+                .get('/users/59f6f0b99bd9dc7f544d7dac')
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.a('array');
+                    expect(res.body.length).to.equal(1);
                     done();
                 });
         });

@@ -94,17 +94,17 @@ describe('Users', function () {
                 });
         });
     });
-    describe('POST /users', function() {
-        it('should return a confirmation message and an updated datastore', function (done){
+    describe('POST /users', function () {
+        it('should return a confirmation message and an updated datastore', function (done) {
             var newUser = {
-                "county" : "Carlow",
-                "town" : "Fennagh",
-                "street" : "Main Street",
-                "password" : "Password3",
-                "contactNo" : "0831234567",
-                "email" : "calamc@gmail.com",
-                "lName" : "Carroll",
-                "fName" : "Calam"
+                "county": "Carlow",
+                "town": "Fennagh",
+                "street": "Main Street",
+                "password": "Password3",
+                "contactNo": "0831234567",
+                "email": "calamc@gmail.com",
+                "lName": "Carroll",
+                "fName": "Calam"
             };
             chai.request(server)
                 .post('/users')
@@ -129,8 +129,8 @@ describe('Users', function () {
                 });
         });
     });
-    /*
-    describe('DELETE /users/:id', function() {
+
+    describe('DELETE /users/:id', function () {
         it('should delete a user with a certain id', function (done) {
             chai.request(server)
                 .delete('/users/59f6f0b99bd9dc7f544d7dac')
@@ -139,6 +139,17 @@ describe('Users', function () {
                     done();
                 });
         });
-    })
-    */
+    });
+    describe('POST /users/search', function () {
+        it('should return a name that contains all or part of value', function (done) {
+            var search = {"key": "lName", "value": "Murph"};
+            chai.request(server)
+                .post('/users/search')
+                .send(search)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    done();
+                });
+        });
+    });
 });

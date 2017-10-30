@@ -48,15 +48,15 @@ describe('Users', function () {
                     else {
                         var user2 = new User();
 
-                        user1._id = "59f6f14b9bd9dc7f544d7ddc";
-                        user1.fName = "Shannon";
-                        user1.lName = "Murphy";
-                        user1.email = "shaancaatherine@hotmail.com";
-                        user1.contactNo = "0858216464";
-                        user1.password = "Password2";
-                        user1.street = "An Reailin";
-                        user1.town = "Carrightowhil";
-                        user1.county = "Cork";
+                        user2._id = "59f6f14b9bd9dc7f544d7ddc";
+                        user2.fName = "Shannon";
+                        user2.lName = "Murphy";
+                        user2.email = "shaancaatherine@hotmail.com";
+                        user2.contactNo = "0858216464";
+                        user2.password = "Password2";
+                        user2.street = "An Reailin";
+                        user2.town = "Carrightowhil";
+                        user2.county = "Cork";
 
                         user2.save(function (err) {
                             if (err)
@@ -68,6 +68,18 @@ describe('Users', function () {
                     }
                 });
             }
+        });
+    });
+    describe('GET /users', function () {
+        it('should return all the jobs in the array', function (done) {
+            chai.request(server)
+                .get('/users')
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.a('array');
+                    expect(res.body.length).to.equal(2);
+                    done();
+                });
         });
     });
 });

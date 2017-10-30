@@ -94,4 +94,26 @@ describe('Users', function () {
                 });
         });
     });
+    describe('POST /users', function() {
+        it('should return a confirmation message and an updated datastore', function (done){
+            var newUser = {
+                "county" : "Carlow",
+                "town" : "Fennagh",
+                "street" : "Main Street",
+                "password" : "Password3",
+                "contactNo" : "0831234567",
+                "email" : "calamc@gmail.com",
+                "lName" : "Carroll",
+                "fName" : "Calam"
+            };
+            chai.request(server)
+                .post('/users')
+                .send(newUser)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.have.property('message').equal('User Added!');
+                    done();
+                });
+        });
+    });
 });

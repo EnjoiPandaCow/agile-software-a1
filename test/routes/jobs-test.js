@@ -127,7 +127,7 @@ describe('Jobs', function () {
                 });
         });
     });
-    describe('POST /job', function() {
+    describe('POST /jobs', function() {
         it('should return a confirmation message and an updated datastore', function (done){
             var newJob = {
                 "title": "TEST",

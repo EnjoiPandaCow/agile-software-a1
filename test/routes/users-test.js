@@ -116,4 +116,14 @@ describe('Users', function () {
                 });
         });
     });
+    describe('DELETE /users/:id', function() {
+        it('should delete a user with a certain id', function (done) {
+            chai.request(server)
+                .delete('/users/59f6f0b99bd9dc7f544d7dac')
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    done();
+                });
+        });
+    })
 });

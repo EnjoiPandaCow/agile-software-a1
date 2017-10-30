@@ -116,6 +116,20 @@ describe('Users', function () {
                 });
         });
     });
+    describe('PUT /users/:id', function () {
+        it('should return a confirmation message and an updated datastore', function (done) {
+            var update = {"fName": "Paddy"};
+            chai.request(server)
+                .put('/users/59f6f0b99bd9dc7f544d7dac')
+                .send(update)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.have.property('message').equal('User Updated');
+                    done();
+                });
+        });
+    });
+    /*
     describe('DELETE /users/:id', function() {
         it('should delete a user with a certain id', function (done) {
             chai.request(server)
@@ -126,4 +140,5 @@ describe('Users', function () {
                 });
         });
     })
+    */
 });

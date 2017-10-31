@@ -168,7 +168,6 @@ describe('Users tests', function () {
                 });
         });
     });
-
     describe('DELETE /users/:id', function () {
         it('should delete a user with a certain id', function (done) {
             chai.request(server)
@@ -197,6 +196,28 @@ describe('Users tests', function () {
                 .send(search)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
+                    done();
+                });
+        });
+        it('should return an error message and a 404 error - no value that matches sent value', function (done) {
+           var search = {"key": "lName", "value": "Hello"};
+           chai.request(server)
+               .post('/users/search')
+               .send(search)
+               .end(function (err, res) {
+                  expect(res).to.have.status(404);
+                  expect(res.body).to.have.property('message').equal('No User Containing Search Term Found');
+                  done();
+               });
+        });
+        it('should return an error message and a 404 error - bad key', function (done) {
+            var search = {"key": "cName", "value": "Hello"};
+            chai.request(server)
+                .post('/users/search')
+                .send(search)
+                .end(function (err, res) {
+                    expect(res).to.have.status(404);
+                    expect(res.body).to.have.property('message').equal('No User Containing Search Term Found');
                     done();
                 });
         });

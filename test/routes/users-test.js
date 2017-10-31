@@ -124,6 +124,25 @@ describe('Users tests', function () {
                     done();
                 });
         });
+        it('should return an error message and a 400 error', function (done){
+            var newUser =  {
+                "town": "Fennagh",
+                "street": "Main Street",
+                "password": "Password3",
+                "contactNo": "0831234567",
+                "email": "calamc@gmail.com",
+                "lName": "Carroll",
+                "fName": "Calam"
+            };
+            chai.request(server)
+                .post('/users')
+                .send(newUser)
+                .end(function (err, res) {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.have.property('message').equal('User Not Added! Please Check That You Are Filling All Fields');
+                    done();
+                });
+        });
     });
     describe('PUT /users/:id', function () {
         it('should return a confirmation message and an updated datastore', function (done) {

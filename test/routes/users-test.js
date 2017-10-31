@@ -156,7 +156,7 @@ describe('Users tests', function () {
                     done();
                 });
         });
-        it('should return a error message and a 400 error', function (done) {
+        it('should return an error message and a 400 error', function (done) {
             var update = {"fName" : "Paddy"};
             chai.request(server)
                 .put('/users/59f6f0b99bd9dc7f544d7da')
@@ -175,8 +175,18 @@ describe('Users tests', function () {
                 .delete('/users/59f6f0b99bd9dc7f544d7dac')
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
+                    expect(res.body).to.have.property('message').equal('User Sucessfully Deleted!');
                     done();
                 });
+        });
+        it('should return an error message and a 400 error', function (done) {
+           chai.request(server)
+               .delete('/users/59f6f0b99bd9dc7f544d7da')
+               .end(function (err, res) {
+                   expect(res).to.have.status(400);
+                   expect(res.body).to.have.property('message').equal('Failed To Delete User. Please Try Again');
+                   done();
+               });
         });
     });
     describe('POST /users/search', function () {

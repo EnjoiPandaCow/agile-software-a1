@@ -21,7 +21,7 @@ db.on('error', function(err){
 db.once('open', function(){
 });
 
-describe('Users', function () {
+describe('Users tests', function () {
     beforeEach(function (done) {
 
         User.remove({}, function (err) {
@@ -90,6 +90,15 @@ describe('Users', function () {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.a('array');
                     expect(res.body.length).to.equal(1);
+                    done();
+                });
+        });
+        it('should return an error message and a 404 error', function (done){
+            chai.request(server)
+                .get('/users/59f6f0b99bd9dc7f544d7da')
+                .end(function (err, res) {
+                    expect(res).to.have.status(404);
+                    expect(res.body).to.have.property('message').equal('User Not Found! Please Try Another Job ID.');
                     done();
                 });
         });

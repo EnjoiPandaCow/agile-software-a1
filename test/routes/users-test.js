@@ -156,6 +156,17 @@ describe('Users tests', function () {
                     done();
                 });
         });
+        it('should return a error message and a 400 error', function (done) {
+            var update = {"fName" : "Paddy"};
+            chai.request(server)
+                .put('/users/59f6f0b99bd9dc7f544d7da')
+                .send(update)
+                .end(function (err, res) {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.have.property('message').equal('Failed To Update User Profile. Please Try Again');
+                    done();
+                });
+        });
     });
 
     describe('DELETE /users/:id', function () {

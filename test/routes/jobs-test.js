@@ -173,6 +173,43 @@ describe('Jobs', function () {
                     done();
                 });
         });
+        it('should return an error message and a 400 error', function (done){
+            var newJob =  {
+
+                "desc": "TEST",
+                "size": "TEST",
+                "cStreet": "TEST",
+                "cTown": "TEST",
+                "cCounty": "TEST",
+                "cCoordinates": [
+                    12.345678,
+                    -12.345678
+                ],
+                "dStreet": "TEST",
+                "dTown": "TEST",
+                "dCounty": "TEST",
+                "dCoordinates": [
+                    12.345678,
+                    -12.345678
+                ],
+                "dTime": "2017-10-10T13:12:00.000Z",
+                "price": "00.00",
+                "photos": [
+                    "/photos/job/0003/7.jpg",
+                    "/photos/job/0003/8.jpg"
+                ],
+                "userId": "59f9fb109bd9dc7f544cadfa"
+
+            };
+            chai.request(server)
+                .post('/jobs')
+                .send(newJob)
+                .end(function (err, res) {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.have.property('message').equal('Job Not Added! Please Check That You Are Filling All Fields & Try Again');
+                    done();
+                });
+        });
     });
     describe('PUT /jobs/:id', function () {
         it('should return a confirmation message and an updated datastore', function (done) {

@@ -223,6 +223,17 @@ describe('Jobs', function () {
                     done();
                 });
         });
+        it('should return an error message and a 400 error', function (done) {
+            var update = {"title" : "New Test Title 3.0"};
+            chai.request(server)
+                .put('/jobs/59f1e69dd0ae514f10a24a8')
+                .send(update)
+                .end(function (err, res) {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.have.property('message').equal('Failed To Update Job. Please Try Again');
+                    done();
+                });
+        });
     });
     describe('DELETE /jobs/:id', function() {
         it('should delete a job with a certain id', function (done) {

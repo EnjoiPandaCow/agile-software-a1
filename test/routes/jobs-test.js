@@ -255,7 +255,7 @@ describe('Jobs', function () {
         });
     })
 });
-describe('POST /jobs/search', function() {
+describe('POST /jobs/search - Happy Cases', function() {
     it('should return a title that contains all or part of value', function (done) {
         var search = {"key":"title", "value":"Couch"};
         chai.request(server)
@@ -266,6 +266,31 @@ describe('POST /jobs/search', function() {
                 done();
             });
     });
+    describe('POST /jobs/search - Error Cases' , function() {
+        it('should return an error message and a 404 error - no value that matches sent value', function (done) {
+            var search = {"key": "title", "value": "Hello"};
+            chai.request(server)
+                .post('/jobs/search')
+                .send(search)
+                .end(function (err, res) {
+                    expect(res).to.have.status(404);
+                    expect(res.body).to.have.property('message').equal('No Job Containing Search Term Found');
+                    done();
+                });
+        });
+        it('should return an error message and a 404 error - bad key', function (done) {
+            var search = {"key": "tTitle", "value": "Hello"};
+            chai.request(server)
+                .post('/jobs/search')
+                .send(search)
+                .end(function (err, res) {
+                    expect(res).to.have.status(404);
+                    expect(res.body).to.have.property('message').equal('No Job Containing Search Term Found');
+                    done();
+                });
+        });
+    });
 });
+
 
 

@@ -244,6 +244,15 @@ describe('Jobs', function () {
                     done();
                 });
         });
+        it('should return an error message and a 400 error', function (done) {
+            chai.request(server)
+                .delete('/jobs/59f1e69dd0ae514f10a24a8')
+                .end(function (err, res) {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.have.property('message').equal('Failed To Delete Job. Please Try Again');
+                    done();
+                });
+        });
     })
 });
 describe('POST /jobs/search', function() {

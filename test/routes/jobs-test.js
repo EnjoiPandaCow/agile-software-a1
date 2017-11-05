@@ -126,6 +126,15 @@ describe('Jobs', function () {
                     done();
                 });
         });
+        it('should return an error message and a 404 error', function (done){
+            chai.request(server)
+                .get('/jobs/59f1e69dd0ae514f10a24a8')
+                .end(function (err, res) {
+                    expect(res).to.have.status(404);
+                    expect(res.body).to.have.property('message').equal('Job Not Found! Please Try Another Job ID.');
+                    done();
+                });
+        });
     });
     describe('POST /jobs', function() {
         it('should return a confirmation message and an updated datastore', function (done){

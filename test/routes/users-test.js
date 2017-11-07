@@ -114,8 +114,9 @@ describe('Users tests', function () {
                         fName : "Shannon"
                     });
                     done();
+
                 });
-        });
+        })
     });
     describe('GET /users/:id', function () {
         it('should return a single user with certain id', function (done) {
@@ -180,7 +181,33 @@ describe('Users tests', function () {
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body).to.have.property('message').equal('User Added!');
-                    done();
+                    chai.request(server)
+                        .get('/users')
+                        .end(function(err, res) {
+                            var result = _.map(res.body, function(user) {
+                                return {
+                                    county : user.county,
+                                    town : user.town,
+                                    street : user.street,
+                                    password : user.password,
+                                    contactNo : user.contactNo,
+                                    email : user.email,
+                                    lName : user.lName,
+                                    fName : user.fName
+                                };
+                            });
+                            expect(result).to.include({
+                                "county": "Carlow",
+                                "town": "Fennagh",
+                                "street": "Main Street",
+                                "password": "Password3",
+                                "contactNo": "0831234567",
+                                "email": "calamc@gmail.com",
+                                "lName": "Carroll",
+                                "fName": "Calam"
+                            });
+                            done();
+                        });
                 });
         });
         it('should return an error message and a 400 error', function (done){

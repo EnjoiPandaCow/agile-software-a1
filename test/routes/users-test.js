@@ -239,7 +239,35 @@ describe('Users tests', function () {
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body).to.have.property('message').equal('User Updated');
-                    done();
+                    chai.request(server)
+                        .get('/users')
+                        .end(function(err, res) {
+                            var result = _.map(res.body, function(user) {
+                                return {
+                                    _id : user._id,
+                                    county : user.county,
+                                    town : user.town,
+                                    street : user.street,
+                                    password : user.password,
+                                    contactNo : user.contactNo,
+                                    email : user.email,
+                                    lName : user.lName,
+                                    fName : user.fName
+                                };
+                            });
+                            expect(result).to.include({
+                                _id : "59f6f0b99bd9dc7f544d7dac",
+                                county : "Kilkenny",
+                                town : "Mooncoin",
+                                street : "Polerone",
+                                password : "Password1",
+                                contactNo : "0831555552",
+                                email : "cjosullivan@hotmail.co.uk",
+                                lName : "O'Sullivan",
+                                fName : "Paddy"
+                            });
+                            done();
+                        });
                 });
         });
         it('should return an error message and a 400 error', function (done) {

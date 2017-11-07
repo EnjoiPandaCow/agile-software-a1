@@ -302,7 +302,7 @@ describe('Users tests', function () {
                });
         });
     });
-    describe('POST /users/search', function () {
+    describe('POST /users/search - Happy Cases', function () {
         it('should return a name that contains all or part of value', function (done) {
             var search = {"key": "lName", "value": "Murph"};
             chai.request(server)

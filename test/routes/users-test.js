@@ -310,6 +310,31 @@ describe('Users tests', function () {
                 .send(search)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
+                    expect(res.body.length).to.equal(1);
+                    var result = _.map(res.body, function(user){
+                        return {
+                            _id : user._id,
+                            county : user.county,
+                            town : user.town,
+                            street : user.street,
+                            password : user.password,
+                            contactNo : user.contactNo,
+                            email : user.email,
+                            lName : user.lName,
+                            fName : user.fName
+                        };
+                    });
+                    expect(result).to.include({
+                        _id : "59f6f14b9bd9dc7f544d7ddc",
+                        county : "Cork",
+                        town : "Carrightowhil",
+                        street : "An Reailin",
+                        password : "Password2",
+                        contactNo : "0858216464",
+                        email : "shaancaatherine@hotmail.com",
+                        lName : "Murphy",
+                        fName : "Shannon"
+                    });
                     done();
                 });
         });

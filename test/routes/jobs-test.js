@@ -194,6 +194,52 @@ describe('Jobs', function () {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.a('array');
                     expect(res.body.length).to.equal(1);
+                    var result = _.map(res.body, function(job){
+                        return {
+                            _id : job._id,
+                            price : job.price,
+                            dTime : job.dTime,
+                            dCoordinates : job.dCoordinates,
+                            dCounty : job.dCounty,
+                            dTown : job.dTown,
+                            dStreet : job.dStreet,
+                            cCoordinates : job.cCoordinates,
+                            cCounty : job.cCounty,
+                            cTown : job.cTown,
+                            cStreet : job.cStreet,
+                            size : job.size,
+                            desc : job.desc,
+                            title : job.title,
+                            photos : job.photos
+                        };
+                    });
+                    expect(result).to.include({
+                        _id : "59f1e69dd0ae514f10a24a82",
+                        price : 100.14,
+                        dTime : "2014-09-11T14:12:00.000Z",
+                        dCoordinates : [
+                            53.023793,
+                            -9.30881
+                        ],
+                        dCounty : "Clare",
+                        dTown : "Doolin",
+                        dStreet : "Roadford Doolin Clare",
+                        cCoordinates : [
+                            53.282694,
+                            -6.211145
+                        ],
+                        cCounty : "Dublin",
+                        cTown : "Stillorgan",
+                        cStreet : "122 Stillorgan Wood",
+                        size : "Fits in a Van",
+                        desc : "Sold my couch online, no way to transport it",
+                        title : "Couch",
+                        photos : [
+                            "/photos/job/0002/4.jpg",
+                            "/photos/job/0003/5.jpg",
+                            "/photos/job/0004/6.jpg"
+                        ]
+                    });
                     done();
                 });
         });
